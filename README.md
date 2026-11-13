@@ -15,7 +15,7 @@ Run these commands from the repository root:
 cp .env.example .env
 npm install
 npm run db:up
-npm run db:migrate
+npm run db:seed
 npm run dev
 ```
 
@@ -49,9 +49,18 @@ postgres://colby_access:colby_access@localhost:5432/colby_access
 | `npm run db:up` | Start PostgreSQL |
 | `npm run db:down` | Stop PostgreSQL without deleting its data |
 | `npm run db:migrate` | Apply pending database migrations |
+| `npm run db:seed` | Apply migrations and replace local data with the demonstration seed |
 | `npm run build` | Type-check and build the client and API |
 | `npm run lint` | Run configured lint checks |
 
 ## Database changes
 
-Add schema changes as ordered SQL files in `db/migrations`, then run `npm run db:migrate`. The migration runner records each applied file, so existing migrations are not run twice.
+The first migration creates the schema. The current demonstration dataset lives in `db/seed.sql`; `npm run db:seed` runs it after applying migrations. Add later schema changes as ordered SQL files in `db/migrations`, then run `npm run db:migrate`.
+
+During the disposable demonstration phase, rebuild the database from the rewritten first migration with:
+
+```bash
+docker compose down -v
+npm run db:up
+npm run db:seed
+```

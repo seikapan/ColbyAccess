@@ -1,5 +1,5 @@
 create table buildings (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   source_id bigint unique check (source_id > 0),
   name text not null unique,
   latitude numeric(11, 8),
@@ -14,7 +14,7 @@ create table buildings (
 );
 
 create table floors (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   building_id bigint not null references buildings (id) on delete cascade,
   floor_number integer,
   floor_label text not null,
@@ -24,7 +24,7 @@ create table floors (
 );
 
 create table parking_lots (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   source_id bigint unique check (source_id > 0),
   name text not null,
   latitude numeric(11, 8),
@@ -51,7 +51,7 @@ create table building_parking_lots (
 );
 
 create table entrances (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   source_id bigint unique check (source_id > 0),
   building_id bigint not null references buildings (id) on delete cascade,
   floor_id bigint,
@@ -67,7 +67,7 @@ create table entrances (
 );
 
 create table restrooms (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   source_id bigint unique check (source_id > 0),
   building_id bigint not null references buildings (id) on delete cascade,
   floor_id bigint,
@@ -84,7 +84,7 @@ create table restrooms (
 );
 
 create table amenities (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   source_id bigint unique check (source_id > 0),
   building_id bigint not null references buildings (id) on delete cascade,
   floor_id bigint,
@@ -97,7 +97,7 @@ create table amenities (
 );
 
 create table elevators (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   source_id bigint unique check (source_id > 0),
   building_id bigint not null references buildings (id) on delete cascade,
   location_description text not null,
@@ -120,7 +120,7 @@ create table elevator_stops (
 );
 
 create table media_assets (
-  id bigint generated always as identity primary key,
+  id bigint generated always as identity (start with 0 minvalue 0) primary key,
   source_id bigint unique check (source_id > 0),
   building_id bigint not null references buildings (id) on delete cascade,
   image_url text not null,
