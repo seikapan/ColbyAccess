@@ -1,0 +1,17 @@
+{
+  "name": "colby-access",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["client", "server"],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "db:down": "docker compose down",
+    "db:migrate": "npm run db:migrate --workspace server",
+    "db:up": "docker compose up -d db",
+    "dev": "concurrently --kill-others-on-fail -n api,web -c blue,green \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

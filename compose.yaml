@@ -1,0 +1,21 @@
+name: colby-access
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-colby_access}
+      POSTGRES_USER: ${POSTGRES_USER:-colby_access}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-colby_access}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
